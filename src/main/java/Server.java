@@ -10,16 +10,16 @@ public class Server {
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Сервер запущен, ожидание подключения...");
+            System.out.println("Server is started...");
 
             try (Socket clientSocket = serverSocket.accept();
                  BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
 
-                System.out.println("Клиент подключился: " + clientSocket.getInetAddress());
+                System.out.println("Client is online: " + clientSocket.getInetAddress());
 
                 String clientMessage = in.readLine();
-                System.out.println("Клиент: " + clientMessage);
+                System.out.println("Client: " + clientMessage);
 
                 if (containsRussianLetters(clientMessage)) {
                     out.println("Что такое паляница?");
@@ -27,23 +27,23 @@ public class Server {
 
                     if (answer != null && answer.trim().equalsIgnoreCase(PASSWORD)) {
                         String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                        out.println("Правильно! Текущая дата и время: " + dateTime);
-                        out.println("До свидания!");
-                        System.out.println("Клиент ответил правильно, соединение завершено.");
+                        out.println("Correct! Data time is: " + dateTime);
+                        out.println("Goodbye!");
+                        System.out.println("Answer is correct.");
                     } else {
-                        out.println("Неверный ответ! Соединение закрыто.");
-                        System.out.println("Клиент дал неверный ответ, соединение закрыто.");
+                        out.println("Nope!!!Fuck off Russian pig!.");
+                        System.out.println("Server is off");
                     }
                 } else {
-                    out.println("Привет! Ты можешь использовать наш сервер.");
-                    System.out.println("Клиент прошел проверку.");
+                    out.println("Hello and welcome!");
+                    System.out.println("Server is online.");
                 }
 
             } catch (IOException e) {
-                System.err.println("Ошибка при взаимодействии с клиентом: " + e.getMessage());
+                System.err.println("Error with client " + e.getMessage());
             }
         } catch (IOException e) {
-            System.err.println("Не удалось запустить сервер: " + e.getMessage());
+            System.err.println("Error .Server is offline " + e.getMessage());
         }
     }
 
